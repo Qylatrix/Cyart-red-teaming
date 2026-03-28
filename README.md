@@ -421,5 +421,4 @@ Final report: Exploited VSFTPD 2.3.4 backdoor (CVSS 10.0) on Metasploitable2. Go
 - https://www.nist.gov/cyberframework
 - https://www.sans.org/white-papers/incident-handlers-handbook/
 - https://letsdefend.io
-"""
 
