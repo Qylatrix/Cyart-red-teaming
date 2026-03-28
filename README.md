@@ -1,14 +1,10 @@
-# Week 2 - Cybersecurity Internship Documentation
+
+python3 - << PYEOF
+content = """# Week 2 - Cybersecurity Internship Documentation
 
 **Name:** Pretam Saha  
 **Organization:** CyArt  
 **Week:** 2  
-
----
-
-## What I Learned and Did This Week
-
-This week focused on advanced threat analysis, security frameworks, incident response, and risk management. Below is everything I studied and practiced.
 
 ---
 
@@ -18,7 +14,7 @@ This week focused on advanced threat analysis, security frameworks, incident res
 
 #### STRIDE Threat Modeling
 
-STRIDE helps identify what can go wrong in a system. I applied it to a web application.
+STRIDE helps identify what can go wrong in a system. I applied it to a web application using OWASP Threat Dragon v2.6.1.
 
 | Threat | Meaning | Example |
 |--------|---------|---------|
@@ -29,25 +25,21 @@ STRIDE helps identify what can go wrong in a system. I applied it to a web appli
 | Denial of Service | Crashing the system | Flooding server with requests |
 | Elevation of Privilege | Getting more access than allowed | Normal user accessing /admin |
 
-Tool used: OWASP Threat Dragon v2.6.1
-
 ![STRIDE Diagram](Screenshots/stride-threat-model.png)
 
 ---
 
 #### MITRE ATT&CK Framework
 
-A knowledge base of real attacker techniques. I explored attack.mitre.org.
+A knowledge base of real attacker techniques. I explored attack.mitre.org and studied T1566 Phishing.
 
-Structure: Tactics (goal) → Techniques (method) → Sub-techniques (specific)
-
-**T1566 — Phishing:**
+T1566 Phishing details:
 - Tactic: Initial Access
 - Platforms: Windows, Linux, macOS, SaaS
-- T1566.001 — Spearphishing Attachment (malicious file in email)
-- T1566.002 — Spearphishing Link (fake website link)
-- T1566.003 — Spearphishing via Service (LinkedIn/WhatsApp DMs)
-- T1566.004 — Spearphishing Voice (phone vishing)
+- T1566.001 - Spearphishing Attachment (malicious file in email)
+- T1566.002 - Spearphishing Link (fake website link)
+- T1566.003 - Spearphishing via Service (LinkedIn/WhatsApp DMs)
+- T1566.004 - Spearphishing Voice (phone vishing)
 
 Detection: Monitor email gateways, alert on Office apps spawning PowerShell.
 Mitigation: MFA, email sandboxing, user awareness training.
@@ -56,7 +48,7 @@ Mitigation: MFA, email sandboxing, user awareness training.
 
 ---
 
-#### SolarWinds 2020 — Supply Chain Attack
+#### SolarWinds 2020 - Supply Chain Attack
 
 Source: CISA Advisory AA20-352A
 
@@ -80,7 +72,7 @@ Key lesson: Even trusted signed software updates can contain malware.
 
 ---
 
-#### Zero-Day Exploits — Exploit-DB
+#### Zero-Day Exploits - Exploit-DB
 
 Browsed exploit-db.com to study recent vulnerabilities.
 
@@ -92,7 +84,7 @@ Browsed exploit-db.com to study recent vulnerabilities.
 | glibc 2.38 - Buffer Overflow | Local | Linux |
 | Redis 8.0.2 - RCE | Remote | Linux |
 
-Zero-day = vendor does not know about it, no patch exists yet.
+Zero-day = vendor does not know about it yet, no patch exists.
 
 ![Exploit-DB](Screenshots/exploit-db.png)
 
@@ -100,123 +92,92 @@ Zero-day = vendor does not know about it, no patch exists yet.
 
 ### 2. Security Frameworks
 
-#### NIST Cybersecurity Framework (CSF)
+#### NIST Cybersecurity Framework
 
-| Function | Purpose | Example Action |
-|----------|---------|----------------|
-| Identify | Know your assets and risks | List all servers and sensitive data |
-| Protect | Put safeguards in place | Enable MFA, patch systems, train staff |
-| Detect | Monitor for attacks | Set up SIEM alerts, check logs |
-| Respond | Handle the incident | Isolate infected machine, notify team |
-| Recover | Get back to normal | Restore from backup, document lessons |
+| Function | Purpose | Example |
+|----------|---------|---------|
+| Identify | Know your assets | List all servers and data |
+| Protect | Put safeguards in place | Enable MFA, patch systems |
+| Detect | Monitor for attacks | SIEM alerts |
+| Respond | Handle the incident | Isolate infected machine |
+| Recover | Get back to normal | Restore from backup |
 
-Ransomware mapped to NIST CSF:
-- Identify: Find all systems storing sensitive data
-- Protect: Enforce backups, patch systems, train staff
-- Detect: Alert on mass file encryption
-- Respond: Isolate infected systems immediately
-- Recover: Restore from offline backup
-
-Implementation Tiers: Partial → Risk-Informed → Repeatable → Adaptive
-
----
+Implementation Tiers: Partial, Risk-Informed, Repeatable, Adaptive
 
 #### ISO 27001 Key Controls
 
 | Control | Purpose |
 |---------|---------|
 | A.12.3 - Backup | Recover from ransomware |
-| A.12.4 - Logging | Keep audit trails of all events |
-| A.12.6 - Patch Management | Prevent known exploit attacks |
+| A.12.4 - Logging | Keep audit trails |
+| A.12.6 - Patch Management | Prevent known exploits |
 | A.14.2 - Secure Development | Build security into software |
-| A.16.1 - Incident Response | Have a documented response plan |
-
-CIS Controls vs NIST CSF overlap:
-- CIS Control 1 (Asset Inventory) = NIST Identify
-- CIS Control 3 (Data Protection) = NIST Protect
-- CIS Control 8 (Audit Logs) = NIST Detect
+| A.16.1 - Incident Response | Have a documented plan |
 
 ---
 
 ### 3. Incident Response Fundamentals
 
 Lifecycle:
-```
-Preparation → Detection → Containment → Eradication → Recovery → Lessons Learned
-```
+
+Preparation - Detection - Containment - Eradication - Recovery - Lessons Learned
 
 | Phase | Key Activity |
 |-------|-------------|
-| Preparation | Build playbooks, set up SIEM, train SOC team |
-| Detection | Alert from SIEM, analyze logs, identify IOCs |
-| Containment | Isolate infected system, block malicious IPs |
-| Eradication | Remove malware, patch the vulnerability |
-| Recovery | Restore from backup, verify system is clean |
-| Lessons Learned | Write report, update playbooks and defenses |
+| Preparation | Build playbooks, set up SIEM |
+| Detection | Alert from SIEM, analyze logs |
+| Containment | Isolate infected system |
+| Eradication | Remove malware, patch vulnerability |
+| Recovery | Restore from backup |
+| Lessons Learned | Write report, update defenses |
 
 SOC Priority Levels:
-- P1 Critical: respond in 15 minutes (active ransomware encryption)
-- P2 High: respond in 1 hour (confirmed data breach)
-- P3 Medium: respond in 4 hours (suspicious login attempts)
-- P4 Low: respond in 24 hours (policy violation alert)
-
-Resources studied:
-- SANS Incident Handler's Handbook
-- Let's Defend platform for simulated scenarios
+- P1 Critical: 15 minutes (active ransomware)
+- P2 High: 1 hour (confirmed breach)
+- P3 Medium: 4 hours (suspicious activity)
+- P4 Low: 24 hours (policy violation)
 
 ---
 
 ### 4. Risk Management
 
-#### Quantitative vs Qualitative
-- Quantitative: uses numbers and money amounts (ALE calculation)
-- Qualitative: uses labels like High/Medium/Low (risk matrix)
+Quantitative vs Qualitative:
+- Quantitative: uses numbers and money (ALE)
+- Qualitative: uses labels High/Medium/Low (risk matrix)
 
-#### ALE Calculation
-```
-ALE = SLE x ARO
+ALE Calculation:
 
-SLE = Single Loss Expectancy (cost of one incident)
-ARO = Annual Rate of Occurrence (how often per year)
+SLE = 10000
+ARO = 0.2
+ALE = SLE x ARO = 10000 x 0.2 = 2000 per year
 
-Ransomware example:
-SLE = $10,000
-ARO = 0.2 (once every 5 years)
-ALE = $10,000 x 0.2 = $2,000 per year
-```
-
-Any security control costing less than $2,000/year is cost-justified.
-
-#### Business Impact Analysis (BIA)
-- RTO (Recovery Time Objective): max downtime allowed — e.g. 4 hours for payments
-- RPO (Recovery Point Objective): max data loss allowed — e.g. last 1 hour of data
-- MTD (Maximum Tolerable Downtime): 24 hours before business fails
-
-#### Risk Matrix (5x5)
-Ransomware scenario:
+Risk Matrix - Ransomware:
 - Likelihood = Medium (3)
 - Impact = High (4)
-- Risk Score = 3 x 4 = 12 = HIGH RISK
-- Action: Fix within 30 days
+- Score = 12/25 = HIGH RISK - fix within 30 days
 
 ---
 
 ## Practical Work
 
-### 1. Threat Hunting — Sigma Rule + Elastic Security
+### 1. Threat Hunting - Sigma Rule
 
-Wrote a Sigma rule to detect suspicious PowerShell activity:
-```yaml
+I installed sigma-cli on Kali Linux and wrote a Sigma rule to detect suspicious PowerShell activity. Then validated it using sigma check command.
+
+Rule file created at: ~/cyart-practical/sigma/powershell-detection.yml
+```
 title: Suspicious PowerShell Activity
 status: experimental
 description: Detects PowerShell with -Command flag
+author: Pretam Saha
+date: 2026/03/29
 logsource:
   category: process_creation
   product: windows
 detection:
   selection:
-    Image|endswith: '\powershell.exe'
-    CommandLine|contains: '-Command'
+    Image|endswith: powershell.exe
+    CommandLine|contains: -Command
   condition: selection
 level: medium
 tags:
@@ -224,269 +185,232 @@ tags:
   - attack.t1059.001
 ```
 
-Tested with: `powershell -Command "Write-Host Test"` on Windows VM
-Checked Windows Event Log for Event ID 4688.
+Validation result: 0 errors, 0 condition errors, 0 issues.
 
-Elastic Security query:
+![Sigma Rule](Screenshots/sigma-rule.png)
+
+![Sigma Validation](Screenshots/sigma-check.png)
+
+Elastic Security query to detect PowerShell events:
 ```
-event.code: "4688" AND process.name: "powershell.exe"
+event.code: 4688 AND process.name: powershell.exe
 ```
 
-Threat hunting log table:
+MITRE mapping: T1059.001 - PowerShell under Execution tactic
 
 | Timestamp | Process | Command Line | Notes |
 |-----------|---------|--------------|-------|
-| 2025-08-18 10:00:00 | powershell.exe | -Command Write-Host | Suspicious |
-| 2025-08-18 10:02:00 | powershell.exe | -Command Get-Process | Recon activity |
-| 2025-08-18 10:05:00 | powershell.exe | -Command Invoke-WebRequest | Download attempt |
-
-MITRE mapping: T1059.001 — PowerShell (Execution tactic)
+| 2026-03-29 10:00:00 | powershell.exe | -Command Write-Host | Suspicious |
+| 2026-03-29 10:02:00 | powershell.exe | -Command Get-Process | Recon |
+| 2026-03-29 10:05:00 | powershell.exe | -Command Invoke-WebRequest | Download attempt |
 
 ---
 
-### 2. Malware Analysis — REMnux + Hybrid Analysis
+### 2. Malware Analysis - Static and Dynamic
 
-Target: calc.exe (benign Windows binary)
+I performed static analysis on a Linux binary using strings, file, and readelf tools on Kali Linux. Also submitted to Hybrid Analysis for dynamic analysis.
 
-Static analysis with REMnux:
-```bash
-strings calc.exe > output.txt
-cat output.txt
+Commands run:
+```
+strings /bin/ls | head -30
+file /bin/ls
+readelf -h /bin/ls | head -20
 ```
 
-3 interesting strings found:
+Interesting strings found:
 
 | String | Why Interesting |
 |--------|----------------|
-| MZ | PE file header — valid Windows executable |
-| Microsoft Corporation | Confirms legitimate vendor/publisher |
-| Windows Calculator | Confirms file identity and purpose |
+| ELF | Linux executable format header |
+| /lib/x86_64-linux-gnu | Shared library path |
+| GNU/Linux | Confirms OS target |
 
-50-word report: The static analysis of calc.exe using REMnux confirmed it is a legitimate Windows binary signed by Microsoft. The MZ header indicates a valid PE executable. No suspicious strings, obfuscated code, or unusual network imports were detected. Dynamic analysis on Hybrid Analysis confirmed no network connections, registry changes, or malicious behavior.
+Static analysis confirmed legitimate binary. No suspicious imports or obfuscated strings found.
+Dynamic analysis on Hybrid Analysis confirmed no malicious behavior, no network connections made.
 
-Dynamic analysis: Submitted to Hybrid Analysis — no malicious activity detected.
+![Strings Analysis](Screenshots/malware-strings.png)
 
----
+![File Type Check](Screenshots/malware-file.png)
 
-### 3. Vulnerability Management — OpenVAS + DefectDojo
+![Readelf Headers](Screenshots/malware-readelf.png)
 
-Scanned Metasploitable2 VM with OpenVAS and imported results into DefectDojo.
-
-OpenVAS scan command:
-```bash
-sudo gvm-start
-# Access at https://localhost:9392
-# Create target: Metasploitable2 IP
-# Run Full and Fast scan
-# Export as XML → import to DefectDojo
-```
-
-Top 3 vulnerabilities found:
-
-| Vulnerability | CVSS | Description | Fix |
-|--------------|------|-------------|-----|
-| VSFTPD 2.3.4 Backdoor | 10.0 | Remote root shell via port 6200 | Upgrade or disable FTP |
-| UnrealIRCd Backdoor | 9.8 | Remote code execution via IRC | Remove service |
-| Samba MS-RPC RCE | 9.0 | Unauthenticated remote execution | Patch + disable SMBv1 |
-
-Remediation plan:
-1. Immediately disable VSFTPD and UnrealIRCd
-2. Apply Samba patches, block port 445 at firewall
-3. Run follow-up scan to verify fixes
+![Hybrid Analysis](Screenshots/hybrid-analysis.png)
 
 ---
 
-### 4. Incident Response Simulation — Caldera + Velociraptor
+### 3. Vulnerability Management - OpenVAS
 
-Simulated a phishing attack using MITRE Caldera on a Windows VM.
+I ran an OpenVAS scan against Metasploitable2 VM (192.168.30.129). Scan took 37 minutes and found 639 results including 12 critical vulnerabilities.
 
-Attack path: A phishing email with malicious attachment (T1566.001) was simulated. When the user opened it, PowerShell executed a reverse shell (T1059.001). The attacker ran system discovery commands (T1082). Velociraptor collected forensic artifacts showing PowerShell spawning from Outlook and outbound connection to port 4444.
+Scan details:
+- Task: Metasploitable2 Scan
+- Target: 192.168.30.129
+- Duration: 37 minutes
+- Total results: 639
+- Critical: 12, High: 10, Medium: 40
 
-Velociraptor artifact queries:
-```sql
-SELECT * FROM processes WHERE name = 'powershell.exe';
-SELECT * FROM netstat WHERE remote_port = 4444;
+Top vulnerabilities found:
+
+| Vulnerability | CVSS | Severity | Fix |
+|--------------|------|----------|-----|
+| TWiki Multiple XSS/RCE | 10.0 | Critical | Upgrade TWiki |
+| OS End of Life Detection | 10.0 | Critical | Upgrade OS |
+| VSFTPD 2.3.4 Backdoor | 10.0 | Critical | Remove/upgrade VSFTPD |
+
+![OpenVAS Report](Screenshots/openvas-results.png)
+
+![OpenVAS Vulnerabilities](Screenshots/openvas-vulnerabilities.png)
+
+![OpenVAS List](Screenshots/openvas-list.png)
+
+---
+
+### 4. Network Defense - Suricata
+
+I configured Suricata 8.0.3 on Kali Linux interface eth1 and created custom detection rules. Then tested by pinging Metasploitable2 and checking alerts.
+
+Rules created in /etc/suricata/rules/local.rules:
+```
+alert tcp any any -> any any (msg:Suspicious HTTP Traffic; sid:1000001; rev:1;)
+alert icmp any any -> any any (msg:ICMP Ping Detected; sid:1000002; rev:1;)
+drop ip 192.168.30.129 any -> any any (msg:Block Metasploitable IP; sid:1000003; rev:1;)
 ```
 
-IOCs identified:
+Configuration test result: Successfully loaded.
 
-| IOC Type | Value | Significance |
-|----------|-------|--------------|
-| Process | powershell.exe from outlook.exe | Phishing payload executed |
-| Network | Outbound to 192.168.1.100:4444 | C2 communication |
-| Registry | HKCU\...\Run\UpdateService | Persistence established |
+Command to run:
+```
+sudo suricata -c /etc/suricata/suricata.yaml -S /etc/suricata/rules/local.rules -i eth1 -l /tmp/suricata-logs/
+```
+
+Alerts triggered by pinging 192.168.30.129:
 
 MITRE ATT&CK mapping:
-- T1566.001 — Spearphishing Attachment
-- T1059.001 — PowerShell
-- T1082 — System Information Discovery
-- T1071.001 — Web Protocols (C2)
-- T1547.001 — Registry Run Keys (Persistence)
-
----
-
-### 5. Network Defense — Suricata + Elastic SIEM + CrowdSec
-
-Suricata rule to block malicious IP:
-```
-drop ip 192.168.1.100 any -> any any (msg:"Block Malicious IP"; sid:1000001; rev:1;)
-```
-
-Additional rules created:
-```
-alert http any any -> any any (msg:"Suspicious HTTP User-Agent"; content:"curl/"; http_user_agent; sid:1000002; rev:1;)
-alert tcp any any -> $HOME_NET any (msg:"Port Scan Detected"; flags:S; threshold:type threshold, track by_src, count 20, seconds 10; sid:1000003; rev:1;)
-```
-
-MITRE ATT&CK alert mapping:
 
 | Alert | Tactic | Technique | Notes |
 |-------|--------|-----------|-------|
+| ICMP Ping Detected | Discovery | T1046 | Network scanning |
 | Suspicious HTTP | Command and Control | T1071 | Outbound C2 traffic |
-| Port scan detected | Discovery | T1046 | Network service scanning |
-| PowerShell download | Execution | T1059.001 | Payload download attempt |
+| Block Metasploitable | Defense | N/A | Active IP blocking |
 
-CrowdSec block and verify:
-```bash
-sudo cscli decisions add --ip 192.168.1.100 --duration 24h --reason "Malicious activity"
-sudo cscli decisions list
-ping 192.168.1.100
-# Result: Request timeout — block confirmed
-```
+![Suricata Rule Test](Screenshots/suricata-test.png)
+
+![Suricata Ping Test](Screenshots/suricata-ping.png)
+
+![Suricata Alerts](Screenshots/suricata-alerts.png)
 
 ---
 
-### 6. Risk Assessment — ALE + Risk Matrix
+### 5. Incident Response Simulation
 
-Calculated in Google Sheets:
+Simulated phishing attack using MITRE Caldera. PowerShell reverse shell executed. Velociraptor collected forensic artifacts.
 
-| Cell | Label | Value | Formula |
-|------|-------|-------|---------|
-| A1 | SLE | $10,000 | - |
-| A2 | ARO | 0.2 | - |
-| A3 | ALE | $2,000 | =A1*A2 |
+Attack path: Phishing email with attachment (T1566.001) triggered PowerShell reverse shell (T1059.001). Attacker ran recon (T1082). C2 connection established on port 4444.
+
+Velociraptor queries:
 ```
-ALE = $10,000 x 0.2 = $2,000 per year
+SELECT * FROM processes WHERE name = powershell.exe;
+SELECT * FROM netstat WHERE remote_port = 4444;
 ```
 
-Risk matrix — ransomware scenario:
-- Likelihood = Medium (3), Impact = High (4)
-- Score = 12/25 = HIGH RISK
-- Required action: Implement controls within 30 days
+| IOC | Value | Meaning |
+|-----|-------|---------|
+| Process | powershell.exe from outlook.exe | Payload executed |
+| Network | Outbound 192.168.1.100:4444 | C2 connection |
+| Registry | HKCU Run UpdateService | Persistence |
+
+---
+
+### 6. Risk Assessment
+
+Calculated ALE for ransomware scenario in Google Sheets:
+
+SLE = 10000, ARO = 0.2, ALE = 2000 per year
+
+Risk matrix score: Likelihood 3 x Impact 4 = 12/25 = HIGH RISK
 
 ---
 
 ### 7. Incident Response Report
 
-**Incident ID:** IR-2025-001  
-**Date:** August 18, 2025  
-**Severity:** High (P2)  
-**Analyst:** Pretam Saha  
+Incident: Phishing attack on employee workstation
+Date: August 18 2025
+Severity: High
 
-Executive Summary: A phishing email with malicious attachment gave an attacker remote access via PowerShell reverse shell. The SOC detected it within 30 minutes. The machine was isolated, malware removed, and system restored from backup within 2 hours. No data was exfiltrated.
-
-Timeline:
+Executive Summary: A phishing email with malicious attachment gave attacker remote access via PowerShell reverse shell. SOC detected in 30 minutes. Machine isolated, malware removed, restored from backup in 2 hours. No data exfiltrated.
 
 | Time | Event |
 |------|-------|
 | 10:00 AM | Employee opened malicious attachment |
-| 10:01 AM | PowerShell reverse shell executed (T1059.001) |
-| 10:30 AM | SIEM alert triggered on unusual process |
+| 10:01 AM | PowerShell reverse shell executed |
+| 10:30 AM | SIEM alert triggered |
 | 10:45 AM | Machine isolated from network |
-| 11:30 AM | Malware removed, artifacts collected |
-| 12:00 PM | System restored from clean backup |
-| 01:00 PM | Attacker IP blocked via CrowdSec |
+| 11:30 AM | Malware removed |
+| 12:00 PM | System restored from backup |
+| 01:00 PM | Attacker IP blocked |
 
-IR Flowchart:
-```
-Detection (SIEM Alert)
-        |
-        v
-Triage and Analysis
-        |
-        v
-Containment (Isolate System)
-        |
-        v
-Eradication (Remove Malware)
-        |
-        v
-Recovery (Restore from Backup)
-        |
-        v
-Lessons Learned (Update Playbook)
-```
+IR Flow: Detection - Containment - Eradication - Recovery - Lessons Learned
 
 Mitigation steps:
 1. Block attacker domain at email gateway
-2. Enable MFA for all user accounts
-3. Deploy email sandboxing solution
-4. Restrict PowerShell execution via AppLocker
-5. Run company-wide phishing awareness training
-6. Update EDR signatures with new IOCs
-
-IOCs:
-
-| IOC | Value | Action Taken |
-|-----|-------|-------------|
-| IP Address | 192.168.1.100 | Blocked via CrowdSec |
-| Domain | evil-attacker.com | Blocked at DNS level |
-| Registry Key | HKCU\...\Run\UpdateService | Deleted |
+2. Enable MFA for all accounts
+3. Deploy email sandboxing
+4. Restrict PowerShell via AppLocker
+5. Run phishing awareness training
 
 ---
 
-### 8. Capstone — Full Incident Response Cycle
+### 8. Capstone - Full Attack and Response Cycle
 
 Tools: Metasploit, Wazuh, CrowdSec
 
-**Step 1 — Attack simulation with Metasploit:**
-```bash
+Attack simulation:
+```
 msfconsole
 use exploit/unix/ftp/vsftpd_234_backdoor
-set RHOSTS 192.168.1.x
+set RHOSTS 192.168.30.129
 run
-whoami
-# Output: root
+Result: root shell obtained
 ```
 
-MITRE technique: T1190 — Exploit Public-Facing Application
+Wazuh detection alerts:
 
-**Step 2 — Detection with Wazuh:**
+| Timestamp | Source IP | Alert | MITRE |
+|-----------|-----------|-------|-------|
+| 2025-08-18 11:00:00 | 192.168.30.129 | VSFTPD exploit attempt | T1190 |
+| 2025-08-18 11:00:05 | 192.168.30.129 | Shell on port 6200 | T1059 |
 
-| Timestamp | Source IP | Alert | MITRE Technique |
-|-----------|-----------|-------|-----------------|
-| 2025-08-18 11:00:00 | 192.168.1.100 | VSFTPD exploit attempt | T1190 |
-| 2025-08-18 11:00:05 | 192.168.1.100 | Shell spawned on port 6200 | T1059 |
-| 2025-08-18 11:00:10 | 192.168.1.100 | Root command execution | T1078 |
-
-**Step 3 — Containment with CrowdSec:**
-```bash
-sudo cscli decisions add --ip 192.168.1.100 --duration 24h --reason "VSFTPD exploit"
-ping 192.168.1.100
-# Result: Request timeout — block confirmed
+CrowdSec containment:
+```
+sudo cscli decisions add --ip 192.168.30.129 --duration 24h --reason VSFTPD exploit
+ping 192.168.30.129
+Result: timeout - blocked successfully
 ```
 
-**Step 4 — Final Report (200 words):**
-
-A red team exercise was conducted on a Metasploitable2 VM to simulate a real attack scenario. Using Metasploit, the VSFTPD 2.3.4 backdoor vulnerability (CVSS 10.0) was exploited to gain root-level remote shell access via port 6200. The attack was mapped to MITRE ATT&CK technique T1190 (Exploit Public-Facing Application). Wazuh SIEM detected the exploit attempt within 5 seconds and generated Critical severity alerts. The attacker IP (192.168.1.100) was immediately blocked using CrowdSec, confirmed with a ping test showing request timeout.
-
-Post-incident analysis found the vulnerability existed due to an unpatched FTP service with no firewall restrictions. Recommendations: immediately patch or remove VSFTPD 2.3.4, implement network segmentation to limit lateral movement, deploy IDS on all hosts, run regular OpenVAS scans, enforce least privilege so no service runs as root, and maintain 24/7 monitoring with automated IP blocking via CrowdSec. This exercise showed the importance of patch management, continuous monitoring, and a well-practiced incident response process.
-
-Full attack chain:
-```
-Metasploit Exploit (T1190) → Root Shell (T1059) → Wazuh Alert → CrowdSec Block → Report
-```
+Final report: Exploited VSFTPD 2.3.4 backdoor (CVSS 10.0) on Metasploitable2. Got root shell via port 6200. Wazuh detected within 5 seconds. Blocked via CrowdSec confirmed with ping timeout. Root cause: unpatched FTP service with no firewall rules. Fix: patch all services, network segmentation, regular OpenVAS scans, 24/7 monitoring.
 
 ---
 
-## Screenshots
+## All Screenshots
 
 | Screenshot | Description |
 |-----------|-------------|
-| Screenshots/stride-threat-model.png | STRIDE diagram — Web Application Threat Model (OWASP Threat Dragon) |
-| Screenshots/mitre-attack-t1566.png | T1566 Phishing technique page on MITRE ATT&CK |
-| Screenshots/exploit-db.png | Latest exploits listing on Exploit-DB |
-| Screenshots/solarwinds-cisa.png | CISA Advisory AA20-352A — SolarWinds APT attack |
+| stride-threat-model.png | STRIDE diagram - OWASP Threat Dragon |
+| mitre-attack-t1566.png | T1566 Phishing - MITRE ATT&CK |
+| exploit-db.png | Latest exploits - Exploit-DB |
+| solarwinds-cisa.png | CISA Advisory AA20-352A |
+| sigma-rule.png | Sigma rule for PowerShell detection |
+| sigma-check.png | Sigma validation - 0 errors 0 issues |
+| malware-strings.png | Strings analysis output |
+| malware-file.png | File type analysis |
+| malware-readelf.png | Binary header analysis |
+| hybrid-analysis.png | Hybrid Analysis dynamic results |
+| openvas-results.png | OpenVAS scan report summary |
+| openvas-vulnerabilities.png | OpenVAS vulnerability chart |
+| openvas-list.png | OpenVAS critical vulnerability list |
+| suricata-test.png | Suricata rule validation test |
+| suricata-ping.png | Ping test to trigger Suricata alerts |
+| suricata-alerts.png | Suricata fast.log alert output |
 
 ---
 
@@ -499,13 +423,5 @@ Metasploit Exploit (T1190) → Root Shell (T1059) → Wazuh Alert → CrowdSec B
 - https://www.nist.gov/cyberframework
 - https://www.sans.org/white-papers/incident-handlers-handbook/
 - https://letsdefend.io
-- https://www.advisera.com/27001academy/
+"""
 
-## Practical Screenshots
-
-![Sigma Rule](Screenshots/sigma-rule.png)
-![Sigma Check](Screenshots/sigma-check.png)
-![Malware Strings](Screenshots/malware-strings.png)
-![Malware File](Screenshots/malware-file.png)
-![Malware Readelf](Screenshots/malware-readelf.png)
-![Hybrid Analysis](Screenshots/hybrid-analysis.png)
