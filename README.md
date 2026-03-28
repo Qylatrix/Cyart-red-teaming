@@ -1,6 +1,4 @@
-
-python3 - << PYEOF
-content = """# Week 2 - Cybersecurity Internship Documentation
+#  Week 2 - Cybersecurity Internship Documentation
 
 **Name:** Pretam Saha  
 **Organization:** CyArt  
