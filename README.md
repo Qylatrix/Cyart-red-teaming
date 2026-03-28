@@ -500,3 +500,12 @@ Metasploit Exploit (T1190) → Root Shell (T1059) → Wazuh Alert → CrowdSec B
 - https://www.sans.org/white-papers/incident-handlers-handbook/
 - https://letsdefend.io
 - https://www.advisera.com/27001academy/
+
+## Practical Screenshots
+
+![Sigma Rule](Screenshots/sigma-rule.png)
+![Sigma Check](Screenshots/sigma-check.png)
+![Malware Strings](Screenshots/malware-strings.png)
+![Malware File](Screenshots/malware-file.png)
+![Malware Readelf](Screenshots/malware-readelf.png)
+![Hybrid Analysis](Screenshots/hybrid-analysis.png)
